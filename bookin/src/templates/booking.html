@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+  <div class="nav-bar">
+
+  </div>
+
+  
+  <form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit">
+</form>
+
+<div>
+  {% for books in booked%}
+     <div>
+       {{books.teams_name}}
+       {{books.meeting_title}}
+       {{books.date}}
+       {{books.room_number}}
+       {{books.start_time}}
+       {{books.end_time}}
+  {% endfor %}
+
+     </div>
+
+</div>
+
+<div class="Footer">
+
+</div>
+
+</body>
+</html>
