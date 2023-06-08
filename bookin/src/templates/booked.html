@@ -3,23 +3,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+     integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
 <body>
   <div class="nav-bar">
 
   </div>
 <div>
-  {% for books in booked%}
-     <div>
-       {{books.teams_name}}
-       {{books.meeting_title}}
-       {{books.date}}
-       {{books.room_number}}
-       {{books.start_time}}
-       {{books.end_time}}
-  {% endfor %}
-
 </div>
+{% for books in booked%}
+<div class="card" style="width: 18rem;float:left;margin:1rem;">
+  <div class="card-body">
+    <h5 class="card-title">{{books.team_name}}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">{{books.meeting_title}}</h6>
+    <p class="card-text">Booked {{books.room_number}} from {{books.start_time}} to {{books.end_time}} on {{books.date}}</p>
+  </div>
+</div>
+{% endfor %}
 
 <div class="Footer">
 
