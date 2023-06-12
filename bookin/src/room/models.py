@@ -3,15 +3,22 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 # Create your models here.
-class RoomBooking(models.Model):
-    team_name = models.CharField(max_length=300)
-    meeting_title = models.CharField(max_length=300)
-    date = models.DateField()
+
+
+
+class Room(models.Model):
     ROOM_CHOICES = [
         ('Room 1', 'room 1'),
         ('Room 2', 'room 2'),
     ]
     room_number = models.CharField(max_length=100, choices=ROOM_CHOICES) 
+
+class RoomBooking(models.Model):
+    room = models.ForeignKey(Room , on_delete=models.CASCADE)
+    team_name = models.CharField(max_length=300)
+    meeting_title = models.CharField(max_length=300)
+    date = models.DateField()
+
     start_time = models.TimeField(
     validators=[
         MinValueValidator(time(hour=9, minute=0)),
