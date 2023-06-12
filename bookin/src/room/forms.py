@@ -21,6 +21,11 @@ class RoomBookingForm(forms.ModelForm):
         end_time = cleaned_data.get('end_time')
 
         if room_number and date and start_time and end_time:
+
+            room1_bookings = RoomBooking.objects.filter(room_number='Room 1', date=date)
+            room2_bookings = RoomBooking.objects.filter(room_number='Room 2', date=date)
+
+            
             not_available_bookings = RoomBooking.objects.filter(
                 room_number=room_number,
                 date=date,
@@ -31,7 +36,11 @@ class RoomBookingForm(forms.ModelForm):
             if not_available_bookings.exists():
                 raise forms.ValidationError("This room is already booked.")
  
-        return cleaned_data
+        return cleaned_data,room1_bookings,room2_bookings
+
+   
+
+
 
 
 

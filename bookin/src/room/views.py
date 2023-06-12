@@ -18,7 +18,9 @@ def room_booking(request):
             return redirect('bookedrooms')
     else:
         form = RoomBookingForm()
-    return render(request, 'booking.html', {'form': form})
+    room1_bookings = RoomBooking.objects.all()    
+    room2_bookings = RoomBooking.objects.all()   
+    return render(request, 'booking.html', {'form': form ,'room1_bookings':room1_bookings, 'room2_bookings':room2_bookings})
 
 
 
