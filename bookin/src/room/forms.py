@@ -13,6 +13,7 @@ class RoomBookingForm(forms.ModelForm):
         }
    
     def clean(self):
+        avail_list =[]
         cleaned_data = super().clean()
         room_number = cleaned_data.get('room_number')
         date = cleaned_data.get('date')
@@ -29,7 +30,7 @@ class RoomBookingForm(forms.ModelForm):
 
             if not_available_bookings.exists():
                 raise forms.ValidationError("This room is already booked.")
-
+ 
         return cleaned_data
 
 
