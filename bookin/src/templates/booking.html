@@ -18,14 +18,12 @@
   
 <form action="" method="post">
   <center>
-    <div style="border:1px solid black;max-width:22rem;">
+    <div>
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Submit">
     </div>
-    <div>
-      {{room1_booking.RoomBooking.room_number}}
-    </div>
+
   </center> 
 </form>
 

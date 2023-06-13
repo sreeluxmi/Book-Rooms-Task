@@ -11,16 +11,17 @@ from .forms import *
 
 
 def room_booking(request):
+
     if request.method == "POST":
         form = RoomBookingForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('bookedrooms')
+            return redirect('bookroom')
     else:
-        form = RoomBookingForm()
-    room1_bookings = RoomBooking.objects.all()    
-    room2_bookings = RoomBooking.objects.all()   
-    return render(request, 'booking.html', {'form': form ,'room1_bookings':room1_bookings, 'room2_bookings':room2_bookings})
+        form = RoomBookingForm()  
+
+    
+    return render(request, 'booking.html', {'form': form })
 
 
 

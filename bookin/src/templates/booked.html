@@ -14,10 +14,12 @@
 </div>
 {% for books in booked%}
 <div class="card" style="width: 18rem;float:left;margin:1rem;">
+
   <div class="card-body">
     <h5 class="card-title">{{books.team_name}}</h5>
     <h6 class="card-subtitle mb-2 text-muted">{{books.meeting_title}}</h6>
-    <p class="card-text">Booked {{books.room_number}} from {{books.start_time}} to {{books.end_time}} on {{books.date}}</p>
+    <p class="card-text">Booked {{books.room_name}} <br> Starting time : {{books.start_time}} <br>
+       Ending time :{{books.end_time}} <br> Date : {{books.date}}</p>
   </div>
 </div>
 {% endfor %}
