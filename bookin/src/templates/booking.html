@@ -3,6 +3,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script>
+      $('#myModal').on('shown.bs.modal', function () {
+      $('#myInput').trigger('focus')
+      })
+    </script>
+
 </head>
 <body>
   <div class="nav-bar">
@@ -10,26 +16,16 @@
   </div>
 
   
-  <form action="" method="post">
+<form action="" method="post">
+  <center>
+    <div>
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Submit">
+    </div>
+
+  </center> 
 </form>
-
-<div>
-  {% for books in booked%}
-     <div>
-       {{books.teams_name}}
-       {{books.meeting_title}}
-       {{books.date}}
-       {{books.room_number}}
-       {{books.start_time}}
-       {{books.end_time}}
-  {% endfor %}
-
-     </div>
-
-</div>
 
 <div class="Footer">
 
