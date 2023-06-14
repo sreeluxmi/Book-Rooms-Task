@@ -13,11 +13,18 @@ class Room(models.Model):
         return self.room_number
 
 class RoomBooking(models.Model):
+<<<<<<< HEAD
     room_name = models.ForeignKey(Room , on_delete=models.CASCADE , default="Romm 1")
     team_name = models.CharField(max_length=300)
     meeting_title = models.CharField(max_length=300)
     date = models.DateField()
     
+=======
+    room_name = models.ForeignKey(Room , on_delete=models.CASCADE)
+    team_name = models.CharField(max_length=300)
+    meeting_title = models.CharField(max_length=300)
+    date = models.DateField()
+>>>>>>> a2717e46caaea4230ab7a26309028879c5aa10c9
 
     start_time = models.TimeField(
         validators=[
