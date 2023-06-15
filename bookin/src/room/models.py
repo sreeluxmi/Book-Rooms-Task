@@ -1,6 +1,8 @@
 from datetime import time
 from django.db import models
+from django.db.models import Q
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.forms import ValidationError
 
 # Create your models here.
 
@@ -13,18 +15,11 @@ class Room(models.Model):
         return self.room_number
 
 class RoomBooking(models.Model):
-<<<<<<< HEAD
-    room_name = models.ForeignKey(Room , on_delete=models.CASCADE , default="Romm 1")
+    room_name = models.ForeignKey(Room , on_delete=models.CASCADE )
     team_name = models.CharField(max_length=300)
     meeting_title = models.CharField(max_length=300)
     date = models.DateField()
     
-=======
-    room_name = models.ForeignKey(Room , on_delete=models.CASCADE)
-    team_name = models.CharField(max_length=300)
-    meeting_title = models.CharField(max_length=300)
-    date = models.DateField()
->>>>>>> a2717e46caaea4230ab7a26309028879c5aa10c9
 
     start_time = models.TimeField(
         validators=[
@@ -44,6 +39,7 @@ class RoomBooking(models.Model):
     def __str__(self):
         return self.team_name
     
+
 
     
 
