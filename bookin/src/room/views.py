@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
+from django.contrib import messages
 from django.views.generic import ListView,UpdateView,DeleteView
 
 
@@ -10,7 +11,6 @@ from .forms import *
 
 
 def room_booking(request):
-
     if request.method == "POST":
         form = RoomBookingForm(request.POST)
         if form.is_valid():
@@ -19,6 +19,7 @@ def room_booking(request):
     else:
         form = RoomBookingForm()  
     return render(request, 'booking.html', {'form': form })
+
 
 class BookingListView(ListView):
     model = RoomBooking

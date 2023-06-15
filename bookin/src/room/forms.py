@@ -18,11 +18,14 @@ class RoomBookingForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         if not self.instance.pk:
             date = self.data.get('date')
-            self.fields['room_name'].queryset = Room.objects.exclude(
+            available_rooms= Room.objects.exclude(
                 roombooking__date=date,
                 roombooking__start_time__lte=time(hour=9, minute=0),
                 roombooking__end_time__gte=time(hour=18, minute=0)
-            ) 
+            )
+
+            if not available_rooms.exists():
+                 self.fields['room_name'].choices = [('', 'No room available')]
 
     def clean(self):
         cleaned_data = super().clean()
@@ -41,8 +44,14 @@ class RoomBookingForm(forms.ModelForm):
 
             if not_available_room.exists():
                 raise forms.ValidationError("This room is already booked for this time.")
+            
+            if self.instance:
+                not_available_room = not_available_room.exclude(pk=self.instance.pk)
 
         return cleaned_data
+    
+
+
 
     
    
