@@ -1,13 +1,14 @@
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
-from django.contrib import messages
+from datetime import time
 from django.views.generic import ListView,UpdateView,DeleteView
-
+from django.http import JsonResponse
 
 from .models import *
 from .forms import *
 
 # Create your views here.
+
 
 
 def room_booking(request):
@@ -18,9 +19,18 @@ def room_booking(request):
             return redirect('bookroom')
     else:
         form = RoomBookingForm()  
+
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest' and 'date' in request.GET:
+        date = request.GET.get('date')
+        start_time = time(hour=9, minute=0)
+        end_time = time(hour=18, minute=0)
+        booked_rooms = RoomBooking.objects.filter(date=date, end_time__gt=start_time, start_time__lt=end_time)
+        available_rooms = Room.objects.exclude(roombooking__in=booked_rooms).values('id', 'room_number')
+        return JsonResponse({'rooms': list(available_rooms)})
+    
     return render(request, 'booking.html', {'form': form })
-
-
+ 
+    
 class BookingListView(ListView):
     model = RoomBooking
     context_object_name = "booked"

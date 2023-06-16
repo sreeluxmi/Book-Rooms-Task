@@ -3,17 +3,35 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script>
-      $('#myModal').on('shown.bs.modal', function () {
-      $('#myInput').trigger('focus')
-      })
+      $(document).ready(function(){
+        $('#id_date').change(function(){   
+          let dateSelected = $('#id_date').val();
+          $.ajax({
+            url: "/bookroom/",
+            type : 'GET',
+            date : { date: dateSelected },
+            headers: {
+           "X-Requested-With": "XMLHttpRequest"
+            }
+            success: function(){
+              if (response.room.length == 0 ){
+                $('#id_room_name').append('<option value="" disabled option>No rooms available for now</option>');
+              }else{
+                $.each(response.rooms, function(index, room){
+                $('#id_room_name').append('<option value="' + room.id + '">' + room.room_number + '</option>');
+                });
+              }
+            }
+           });
+          
+        });
+      });
     </script>
-
+   
 </head>
 <body>
-  <div class="nav-bar">
-
-  </div>
 
   
 <form action="" method="post">
@@ -27,9 +45,6 @@
   </center> 
 </form>
 
-<div class="Footer">
-
-</div>
 
 </body>
 </html>
