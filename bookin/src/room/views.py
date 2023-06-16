@@ -9,8 +9,6 @@ from .forms import *
 
 # Create your views here.
 
-
-
 def room_booking(request):
     if request.method == "POST":
         form = RoomBookingForm(request.POST)
@@ -26,10 +24,20 @@ def room_booking(request):
         end_time = time(hour=18, minute=0)
         booked_rooms = RoomBooking.objects.filter(date=date, end_time__gt=start_time, start_time__lt=end_time)
         available_rooms = Room.objects.exclude(roombooking__in=booked_rooms).values('id', 'room_number')
-        return JsonResponse({'rooms': list(available_rooms)})
-    
+
+        for room in available_rooms:
+            if room in booked_rooms:
+                available_rooms.remove(room)
+
+        if not available_rooms:
+            message = "No rooms available."
+        else:
+            message = ""
+
+        return JsonResponse({'rooms': list(available_rooms), 'message': message})  
     return render(request, 'booking.html', {'form': form })
- 
+
+
     
 class BookingListView(ListView):
     model = RoomBooking

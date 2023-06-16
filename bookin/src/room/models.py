@@ -15,12 +15,9 @@ class Room(models.Model):
         return self.room_number
 
 class RoomBooking(models.Model):
-    room_name = models.ForeignKey(Room , on_delete=models.CASCADE )
     team_name = models.CharField(max_length=300)
     meeting_title = models.CharField(max_length=300)
     date = models.DateField()
-    
-
     start_time = models.TimeField(
         validators=[
             MinValueValidator(time(9, 0, 0)),
@@ -34,6 +31,9 @@ class RoomBooking(models.Model):
             MaxValueValidator(time(18, 0, 0))
         ]
     )
+    room_name = models.ForeignKey(Room , on_delete=models.CASCADE )
+
+
     def __str__(self):
         return self.team_name
     
@@ -51,14 +51,14 @@ class RoomBooking(models.Model):
     def clean(self):
         super().clean()
         if self.room_name and self.date and self.start_time and self.end_time:
-            not_available_room = RoomBooking.objects.filter(
+            bbooked_rooms = RoomBooking.objects.filter(
             Q(room_name=self.room_name),
             Q(date=self.date),
             Q(start_time__lt=self.end_time),
             Q(end_time__gt=self.start_time)
             )         
 
-            if not_available_room.exists():
+            if bbooked_rooms.exists():
                 raise ValidationError(("This room is already booked for this time."))
 
 
